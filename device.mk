@@ -52,3 +52,6 @@ PRODUCT_VENDOR_VERITY_PARTITION := /dev/block/bootdevice/by-name/vendor
 PRODUCT_PRODUCT_VERITY_PARTITION := /dev/block/bootdevice/by-name/product
 PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstab.mt6833:$(TARGET_COPY_OUT_RECOVERY)/root/first_stage_ramdisk/fstab.$(PRODUCT_PLATFORM)
 PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstab.emmc:$(TARGET_COPY_OUT_RECOVERY)/root/first_stage_ramdisk/fstab.emmc
+
+PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,$(LOCAL_PATH)/recovery/root,recovery/root) \
+            $(LOCAL_PATH)/prebuilt/dtb:dtb.img
