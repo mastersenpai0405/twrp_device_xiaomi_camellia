@@ -23,15 +23,6 @@ on post-fs
     exec u:r:update_engine:s0 root root -- /system/bin/mtk_plpath_utils
     start mtk.plpath.utils.link
 
-service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
-    class main
-    user root
-    group root system
-    oneshot
-    disabled
-    seclabel u:r:recovery:s0
-
-
 on init
     # Create a more standard /dev/block layout for our scripts
     symlink /dev/block/platform/bootdevice /dev/block/bootdevice
@@ -44,7 +35,7 @@ on fs
 
 service keystore_auth /system/bin/keystore_auth
     oneshot
-    user root
+    user system
     group root
     disabled
     seclabel u:r:recovery:s0
@@ -83,23 +74,17 @@ on property:ro.crypto.state=unsupported
     stop teei_daemon
     stop vendor.keymaster-4-0
     stop gatekeeper-1-0
-    stop servicemanager
-    stop hwservicemanager
-
+    
 on property:ro.crypto.state=unencrypted
     stop teei_daemon
     stop vendor.keymaster-4-0
     stop gatekeeper-1-0
-    stop servicemanager
-    stop hwservicemanager
-
+    
 on property:twrp.decrypt.done=true
     stop teei_daemon
     stop vendor.keymaster-4-0
     stop gatekeeper-1-0
-    stop servicemanager
-    stop hwservicemanager
-
+    
 on boot
     start boot-hal-1-1
     start health-hal-2-1
