@@ -18,7 +18,7 @@ else
 	log_print 2 "DEFAULTPROP variable set to $DEFAULTPROP."
 fi
 if [ "$sdkver" -lt 30 ]; then
-	venbin="/vendor/bin"
+	venbin="/system/bin"
 	venlib="/vendor/lib"
 	abi=$(getprop ro.product.cpu.abi)
 	case "$abi" in

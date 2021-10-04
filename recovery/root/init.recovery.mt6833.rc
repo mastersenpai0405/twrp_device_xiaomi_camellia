@@ -28,7 +28,8 @@ on init
     symlink /dev/block/platform/bootdevice /dev/block/bootdevice
     mkdir /mnt/vendor/persist 0700 root root
     mount ext4 /dev/block/platform/bootdevice/by-name/persist /mnt/vendor/persist
-   
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+    
 on fs
     install_keyring
     setprop crypto.ready 1
@@ -69,21 +70,24 @@ service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service.beanpod
 on property:hwservicemanager.ready=true
     start keymaster-4-0
     start gatekeeper-1-0
-
+    
 on property:ro.crypto.state=unsupported
     stop teei_daemon
     stop keymaster-4-0
     stop gatekeeper-1-0
+    stop servicemanager
     
 on property:ro.crypto.state=unencrypted
     stop teei_daemon
     stop keymaster-4-0
     stop gatekeeper-1-0
+    stop servicemanager
     
 on property:twrp.decrypt.done=true
     stop teei_daemon
     stop keymaster-4-0
     stop gatekeeper-1-0
+    stop servicemanager
     
 on boot
     start boot-hal-1-1
