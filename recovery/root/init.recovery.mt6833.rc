@@ -51,6 +51,13 @@ service keystore /system/bin/keystore /tmp/misc/keystore
     disabled
     seclabel u:r:recovery:s0
 
+service touchfeature-hal-1-0 /system/bin/vendor.xiaomi.hardware.touchfeature@1.0-service
+    user root
+    group root system
+    onrestart restart touchfeature-hal-1-0
+    disbaled
+    seclabel u:r:recovery:s0
+
 service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service
     user root
     group root
@@ -83,5 +90,10 @@ on property:twrp.decrypt.done=true
     stop gatekeeper-1-0
     
 on boot
+    chown system system /dev/xiaomi-touch
+    chmod 0664 /dev/xiaomi-touch
+    chown system system /sys/class/touch/tp_dev/fod_status
+    chmod 0664 /sys/class/touch/tp_dev/fod_status
+    start touch-feature-hal-1-0
     start boot-hal-1-1
     start health-hal-2-1
