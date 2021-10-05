@@ -23,9 +23,7 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # Boot control HAL
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.1-impl.recovery \
-    android.hardware.boot@1.1-impl \
-    android.hardware.boot@1.0-impl \
-    bootctrl.$(PRODUCT_PLATFORM)
+    android.hardware.boot@1.1-impl
 
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
@@ -52,8 +50,6 @@ TW_OVERRIDE_SYSTEM_PROPS := \
 PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/bootdevice/by-name/system
 PRODUCT_VENDOR_VERITY_PARTITION := /dev/block/bootdevice/by-name/vendor
 PRODUCT_PRODUCT_VERITY_PARTITION := /dev/block/bootdevice/by-name/product
-PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstab.mt6833:$(TARGET_COPY_OUT_RECOVERY)/root/first_stage_ramdisk/fstab.$(PRODUCT_PLATFORM)
-PRODUCT_COPY_FILES += $(LOCAL_PATH)/fstab.emmc:$(TARGET_COPY_OUT_RECOVERY)/root/first_stage_ramdisk/fstab.emmc
 
 PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,$(LOCAL_PATH)/recovery/root,recovery/root) \
             $(LOCAL_PATH)/prebuilt/dtb.img:dtb.img
