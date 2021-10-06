@@ -1,4 +1,4 @@
-import /microtrust.rc
+import /init.microtrust.rc
 
 on post-fs
     # Support A/B feature for EMMC and UFS boot region
@@ -24,38 +24,30 @@ on post-fs
     start mtk.plpath.utils.link
 
 on init
+    start gatekeeper-1-0
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
     
 on fs
     install_keyring
-    setprop crypto.ready 1
-
-service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
-    class main
-    user root
-    group root system
-    oneshot
-    disabled
-    seclabel u:r:recovery:s0
-
+    
 service keystore_auth /system/bin/keystore_auth
     oneshot
-    user system
+    user root
     group root
     disabled
     seclabel u:r:recovery:s0
-    
+
 service keystore /system/bin/keystore /tmp/misc/keystore
     user root
     group root drmrpc readproc
     disabled
     seclabel u:r:recovery:s0
 
-service touchfeature-hal-1-0 /system/bin/vendor.xiaomi.hardware.touchfeature@1.0-service
+service touchfeature-hal-1-0 /system/bin/android.hardware.touchfeature@1.0-service
     user root
     group root system
-    onrestart restart touchfeature-hal-1-0
-    disbaled
+    on restart restart touchfeature-hal-1-0
+    disabled
     seclabel u:r:recovery:s0
 
 service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service
@@ -70,30 +62,32 @@ service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service.beanpod
     disabled
     seclabel u:r:recovery:s0
 
+on property:crypto.ready=1 && property:hwservicemanager.ready=true
+    start gatekeeper-1-0
+
 on property:hwservicemanager.ready=true
     start keymaster-4-0
     start gatekeeper-1-0
- 
+   
 on property:ro.crypto.state=unsupported
     stop teei_daemon
     stop keymaster-4-0
     stop gatekeeper-1-0
-  
+    
 on property:ro.crypto.state=unencrypted
     stop teei_daemon
     stop keymaster-4-0
     stop gatekeeper-1-0
-  
+        
 on property:twrp.decrypt.done=true
     stop teei_daemon
     stop keymaster-4-0
     stop gatekeeper-1-0
-    
+
+on property:crypto.ready=0
+   stop gatekeeper-1-0
+
 on boot
-    chown system system /dev/xiaomi-touch
-    chmod 0664 /dev/xiaomi-touch
-    chown system system /sys/class/touch/tp_dev/fod_status
-    chmod 0664 /sys/class/touch/tp_dev/fod_status
-    start touch-feature-hal-1-0
-    start boot-hal-1-1
-    start health-hal-2-1
+     start boot-hal-1-1
+     start health-hal-2-1
+     start touchfeature-hal-1-0
