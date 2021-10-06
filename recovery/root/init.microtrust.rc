@@ -110,7 +110,7 @@ on load_persist_props_action
     write /proc/bootprof "start teei cfg end (on load_persist_props_action)"
 
 on property:vold.decrypt=trigger_restart_framework
-    write /proc/bootprof "start teei cfg (on trigger_restart_framework)"
+    write /proc/bootprof "start teei cfg (on vold.decrypt=trigger_restart_framework)"
     mkdir /data/vendor/thh
     mkdir /data/vendor/thh/system
     mkdir /data/vendor/thh/tee_00
@@ -182,7 +182,7 @@ on property:vold.decrypt=trigger_restart_framework
     chmod 0771 /data/vendor/key_provisioning
     chown system system /data/vendor/key_provisioning
     restorecon_recursive /data/vendor/thh
-    write /proc/bootprof "start teei cfg end (on trigger_restart_framework)"
+    write /proc/bootprof "start teei cfg end (on vold.decrypt=trigger_restart_framework)"
 
 on post-fs
     # Set /mnt/vendor/persist/rpmb
