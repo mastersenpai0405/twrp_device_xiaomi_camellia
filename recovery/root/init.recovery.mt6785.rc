@@ -46,7 +46,6 @@ service keystore /system/bin/keystore /tmp/misc/keystore
 service touchfeature-hal-1-0 /system/bin/android.hardware.touchfeature@1.0-service
     user root
     group root system
-    on restart restart touchfeature-hal-1-0
     disabled
     seclabel u:r:recovery:s0
 
