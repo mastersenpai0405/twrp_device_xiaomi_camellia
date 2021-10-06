@@ -32,7 +32,7 @@ on fs
     
 service keystore_auth /system/bin/keystore_auth
     oneshot
-    user root
+    user system
     group root
     disabled
     seclabel u:r:recovery:s0
@@ -84,7 +84,7 @@ on property:twrp.decrypt.done=true
     stop gatekeeper-1-0
 
 on property:crypto.ready=0
-   stop gatekeeper-1-0
+    stop gatekeeper-1-0
 
 on boot
      start boot-hal-1-1
