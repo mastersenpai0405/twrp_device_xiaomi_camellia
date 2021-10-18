@@ -85,11 +85,6 @@ on property:twrp.decrypt.done=true
     stop keymaster-4-0
     stop gatekeeper-1-0
 
-on property:crypto.ready=0
-    stop keymaster-4-0
-#    stop gatekeeper-1-0
-
 on boot
      start boot-hal-1-1
      start health-hal-2-1
-     start touchfeature-hal-1-0
