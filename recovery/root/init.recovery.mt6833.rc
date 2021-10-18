@@ -66,7 +66,7 @@ service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service.beanpod
 on property:crypto.ready=1
     start keymaster-4-0
 
-property:hwservicemanager.ready=true
+on property:hwservicemanager.ready=true
     start keymaster-4-0
     start gatekeeper-1-0
     
