@@ -46,13 +46,7 @@ service keystore_auth /system/bin/keystore_auth
 
 service keystore /system/bin/keystore /tmp/misc/keystore
     user root
-    group root drmrpc readproc
-    disabled
-    seclabel u:r:recovery:s0
-
-service touchfeature-hal-1-0 /system/bin/android.hardware.touchfeature@1.0-service
-    user root
-    group root system
+    group root drmrpc readproc log
     disabled
     seclabel u:r:recovery:s0
 
@@ -60,7 +54,6 @@ service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service
     user root
     group root
     disabled
-    oneshot
     seclabel u:r:recovery:s0
 
 service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service.beanpod
@@ -70,9 +63,8 @@ service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service.beanpod
     oneshot
     seclabel u:r:recovery:s0
 
-on property:crypto.ready=1 && property:hwservicemanager.ready=true
+on property:crypto.ready=1
     start keymaster-4-0
-    start gatekeeper-1-0
 
 property:hwservicemanager.ready=true
     start keymaster-4-0

@@ -67,7 +67,6 @@ BOARD_RAMDISK_OFFSET := 0x11088000
 BOARD_KERNEL_TAGS_OFFSET := 0x07c08000
 
 BOARD_BOOTIMG_HEADER_VERSION := 2
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_IMAGE_NAME := Image.gz
 
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel.gz
@@ -123,15 +122,11 @@ TW_INCLUDE_CRYPTO := true
 
 TARGET_RECOVERY_DEVICE_MODULES += \
     libkeymaster4 \
-    libpuresoftkeymasterdevice \
-    ashmemd_aidl_interface-cpp \
-    libashmemd_client
+    libpuresoftkeymasterdevice
 
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/ashmemd_aidl_interface-cpp.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libashmemd_client.so
+    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so
 
 # AVB
 BOARD_AVB_ENABLE := true

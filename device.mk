@@ -22,7 +22,6 @@ AB_OTA_POSTINSTALL_CONFIG += \
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.1-impl.recovery \
     android.hardware.boot@1.1-impl
 
 PRODUCT_PACKAGES_DEBUG += \
@@ -40,16 +39,7 @@ PRODUCT_PACKAGES += \
 
 # health Hal
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-service \
     android.hardware.health@2.1-impl
 
 TW_OVERRIDE_SYSTEM_PROPS := \
     "ro.build.product;ro.build.fingerprint;ro.build.version.incremental;ro.product.device=ro.product.system.device;ro.product.model=ro.product.system.model;ro.product.name=ro.product.system.name"
-
-# Mount Partition Early
-PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/bootdevice/by-name/system
-PRODUCT_VENDOR_VERITY_PARTITION := /dev/block/bootdevice/by-name/vendor
-PRODUCT_PRODUCT_VERITY_PARTITION := /dev/block/bootdevice/by-name/product
-
-PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,$(LOCAL_PATH)/recovery/root,recovery/root) \
-            $(LOCAL_PATH)/prebuilt/dtb.img:dtb.img
