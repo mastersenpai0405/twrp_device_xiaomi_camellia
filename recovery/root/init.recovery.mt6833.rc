@@ -1,6 +1,8 @@
 import /microtrust.rc
 
 on post-fs
+    start boot-hal-1-1
+    
     # Support A/B feature for EMMC and UFS boot region
     wait /dev/block/mmcblk0boot0 2
     symlink /dev/block/sda /dev/block/mmcblk0boot0
@@ -86,5 +88,4 @@ on property:twrp.decrypt.done=true
     stop gatekeeper-1-0
 
 on boot
-     start boot-hal-1-1
      start health-hal-2-1
